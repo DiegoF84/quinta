@@ -1,0 +1,39 @@
+﻿@model IEnumerable<quinta.Models.jugadores>
+
+@{
+    ViewBag.Title = "Lista_jugadores";
+}
+
+<h2>Lista jugadores</h2>
+
+<p>
+    @Html.ActionLink("Agregar Jugador", "Agregar_Jugador")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apellido)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apellido)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Detalle", "Detalle_Jugador", new { id=item.id }) |
+            @Html.ActionLink("Eliminar", "Eliminar_Jugador", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
