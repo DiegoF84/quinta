@@ -10,16 +10,13 @@
 namespace quinta.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class lista_jugadoresEntities : DbContext
+    public partial class lista_jugadoresEntities1 : DbContext
     {
-        internal IEnumerable<object> usuario;
-
-        public lista_jugadoresEntities()
-            : base("name=lista_jugadoresEntities")
+        public lista_jugadoresEntities1()
+            : base("name=lista_jugadoresEntities1")
         {
         }
     
@@ -28,6 +25,9 @@ namespace quinta.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<estado_usuario> estado_usuario { get; set; }
         public virtual DbSet<jugadores> jugadores { get; set; }
+        public virtual DbSet<tipo_usuario1> tipo_usuario1 { get; set; }
+        public virtual DbSet<usuario> usuario { get; set; }
     }
 }

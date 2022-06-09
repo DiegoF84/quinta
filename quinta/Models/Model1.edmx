@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="lista_jugadoresModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="estado_usuario">
+          <Key>
+            <PropertyRef Name="id_estado_usuario" />
+          </Key>
+          <Property Name="id_estado_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="jugadores">
           <Key>
             <PropertyRef Name="id" />
@@ -12,15 +19,78 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="20" />
           <Property Name="apellido" Type="varchar" MaxLength="20" />
+          <Property Name="dni" Type="varchar" MaxLength="200" />
+          <Property Name="edad" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="tipo_usuario1">
+          <Key>
+            <PropertyRef Name="id_tipo_usuario" />
+          </Key>
+          <Property Name="id_tipo_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_usuario" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="clave" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="mail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_estado" Type="int" Nullable="false" />
+          <Property Name="id_tipo" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_usuario_estado_usuario">
+          <End Role="estado_usuario" Type="Self.estado_usuario" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_usuario">
+              <PropertyRef Name="id_estado_usuario" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_tipo_usuario1">
+          <End Role="tipo_usuario1" Type="Self.tipo_usuario1" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario1">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="lista_jugadoresModelStoreContainer">
+          <EntitySet Name="estado_usuario" EntityType="Self.estado_usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="jugadores" EntityType="Self.jugadores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_usuario1" EntityType="Self.tipo_usuario1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_usuario_estado_usuario" Association="Self.FK_usuario_estado_usuario">
+            <End Role="estado_usuario" EntitySet="estado_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_tipo_usuario1" Association="Self.FK_usuario_tipo_usuario1">
+            <End Role="tipo_usuario1" EntitySet="tipo_usuario1" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="lista_jugadoresModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="estado_usuario">
+          <Key>
+            <PropertyRef Name="id_estado_usuario" />
+          </Key>
+          <Property Name="id_estado_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_estado_usuario" FromRole="estado_usuario" ToRole="usuario" />
+        </EntityType>
         <EntityType Name="jugadores">
           <Key>
             <PropertyRef Name="id" />
@@ -28,22 +98,110 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="apellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dni" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="edad" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="lista_jugadoresEntities" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="tipo_usuario1">
+          <Key>
+            <PropertyRef Name="id_tipo_usuario" />
+          </Key>
+          <Property Name="id_tipo_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_tipo_usuario1" FromRole="tipo_usuario1" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="clave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_estado" Type="Int32" Nullable="false" />
+          <Property Name="id_tipo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="estado_usuario" Relationship="Self.FK_usuario_estado_usuario" FromRole="usuario" ToRole="estado_usuario" />
+          <NavigationProperty Name="tipo_usuario1" Relationship="Self.FK_usuario_tipo_usuario1" FromRole="usuario" ToRole="tipo_usuario1" />
+        </EntityType>
+        <Association Name="FK_usuario_estado_usuario">
+          <End Role="estado_usuario" Type="Self.estado_usuario" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado_usuario">
+              <PropertyRef Name="id_estado_usuario" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_tipo_usuario1">
+          <End Role="tipo_usuario1" Type="Self.tipo_usuario1" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario1">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lista_jugadoresEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="estado_usuario" EntityType="Self.estado_usuario" />
           <EntitySet Name="jugadores" EntityType="Self.jugadores" />
+          <EntitySet Name="tipo_usuario1" EntityType="Self.tipo_usuario1" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="FK_usuario_estado_usuario" Association="Self.FK_usuario_estado_usuario">
+            <End Role="estado_usuario" EntitySet="estado_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_tipo_usuario1" Association="Self.FK_usuario_tipo_usuario1">
+            <End Role="tipo_usuario1" EntitySet="tipo_usuario1" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="lista_jugadoresModelStoreContainer" CdmEntityContainer="lista_jugadoresEntities">
+        <EntityContainerMapping StorageEntityContainer="lista_jugadoresModelStoreContainer" CdmEntityContainer="lista_jugadoresEntities1">
+          <EntitySetMapping Name="estado_usuario">
+            <EntityTypeMapping TypeName="lista_jugadoresModel.estado_usuario">
+              <MappingFragment StoreEntitySet="estado_usuario">
+                <ScalarProperty Name="id_estado_usuario" ColumnName="id_estado_usuario" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="jugadores">
             <EntityTypeMapping TypeName="lista_jugadoresModel.jugadores">
               <MappingFragment StoreEntitySet="jugadores">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_usuario1">
+            <EntityTypeMapping TypeName="lista_jugadoresModel.tipo_usuario1">
+              <MappingFragment StoreEntitySet="tipo_usuario1">
+                <ScalarProperty Name="id_tipo_usuario" ColumnName="id_tipo_usuario" />
+                <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="lista_jugadoresModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="id_tipo" ColumnName="id_tipo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

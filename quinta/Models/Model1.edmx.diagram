@@ -4,8 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d29f6794dd234f86a619faa610420cab" Name="Diagram1">
-        <EntityTypeShape EntityType="lista_jugadoresModel.jugadores" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="57863510bbcd49feadf25a121093c590" Name="Diagram1">
+        <EntityTypeShape EntityType="lista_jugadoresModel.estado_usuario" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="lista_jugadoresModel.jugadores" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="lista_jugadoresModel.tipo_usuario1" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="lista_jugadoresModel.usuario" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="lista_jugadoresModel.FK_usuario_estado_usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="lista_jugadoresModel.FK_usuario_tipo_usuario1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

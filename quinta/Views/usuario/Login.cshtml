@@ -1,0 +1,86 @@
+﻿@model quinta.Models.usuario
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<h2>Login</h2>
+<style>
+    fieldset{
+        background-color:burlywood;
+        margin:10% 40% auto;
+        padding:40px 40px;
+    }
+</style>
+
+@using (Html.BeginForm("Login", "usuario", FormMethod.Post))
+{
+<fieldset>
+    <legend> style ="text-aligne:center; border-radius:3px 4px ">Ingresar al Sistema </legend>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @if (ViewBag.Message != null)
+        { 
+           <div style="border:2px solid blue">
+               @ViewBag.Message
+           </div>
+
+                }
+    <table align="center" border="1" draggable="auto">
+        <tr>
+            <td> <label for="id_usuario"><b> Usuario</b></label></td>
+            <td>@Html.TextBoxFor(a =>a.nombre, new {@placeholder="Ingrese Usuario"})</td>
+            <td>@Html.ValidationMessageFor(a =>a.nombre)</td>
+        </tr>
+
+        <tr>
+            <td><b>Clave</b></td>
+            <td>@Html.PasswordFor(a => a.clave, new { @placeholder = "Ingrese Contraseña" }) </td>
+            <td>@Html.ValidationMessageFor(a => a.clave)</td>
+        </tr>
+     <tr>
+         <td><input type="checkbox" checked="checked" name="remember"> Recordarme</td>
+         <td>
+             <input type="submit" value="Login" />
+
+         </td>
+     </tr>
+    </table>
+</fieldset>
+    
+    
+<div class="form-horizontal">
+    <h4>JugadoresCLS</h4>
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.clave, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.clave, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.clave, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

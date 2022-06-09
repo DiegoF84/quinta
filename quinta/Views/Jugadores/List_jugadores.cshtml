@@ -1,0 +1,64 @@
+﻿
+@model  IEnumerable<quinta.Models.jugadores>
+
+@{
+    ViewBag.Title = "Lista_jugadores";
+}
+
+<h2>List_jugadores</h2>
+
+<p>
+    @Html.ActionLink("Agregar Jugador", "Agregar_Jugador", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Reporte PDF", "GenerarPDF", null, new { @class = "btn btn-primary", @target = "_blank" })
+    @Html.ActionLink("Reporte Excel", "Generar_Excel", null, new { @class = "btn btn-primary", @target = "_blank" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.apellido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dni)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.edad)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.edad)
+            </td>
+            <td align="right">
+                @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "glyphicon glyphicon-edit btn btn-primary" }) |
+                @Html.ActionLink("Detalle", "Detalle_Jugador", new { id = item.id }, new { @class = "glyphicon glyphicon-eye-open btn btn-primary" }) |
+                @Html.ActionLink("Eliminar", "Eliminar_Jugador", new { id = item.id }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    function eliminar() {
+        if (confirm("¿Desea eliminar el registro?") == 1) {
+            alert("Se elimino correctamente");
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>
+

@@ -12,12 +12,16 @@ namespace quinta.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class jugadores
+    public partial class usuario
     {
-        public int id { get; set; }
+        public int id_usuario { get; set; }
         public string nombre { get; set; }
-        public string apellido { get; set; }
-        public string dni { get; set; }
-        public string edad { get; set; }
+        public string clave { get; set; }
+        public string mail { get; set; }
+        public int id_estado { get; set; }
+        public int id_tipo { get; set; }
+    
+        public virtual estado_usuario estado_usuario { get; set; }
+        public virtual tipo_usuario1 tipo_usuario1 { get; set; }
     }
 }
